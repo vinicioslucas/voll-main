@@ -1,5 +1,5 @@
 import TableContainer from '@mui/material/TableContainer';
-import { Icon, Paper, TableBody, tableBodyClasses, TableCell, tableCellClasses, TableHead, TableRow } from "@mui/material";
+import { Paper, TableBody, TableCell, tableCellClasses, TableHead, TableRow } from "@mui/material";
 import Table from '@mui/material/Table';
 import Title from '../Title';
 import IConsulta from '../../types/IConsulta';
@@ -28,7 +28,6 @@ const LinhaEstilizada = styled(TableRow)(() => ({
 export default function Tabela({consultas} : {consultas: IConsulta[] | null}){
     return(
         <>
-        <Title>Consultas do dia</Title>
             <TableContainer component={Paper}>
                 <Table sx={{minWidth: 700}} aria-label="tabela-customizada">
                     <TableHead>
