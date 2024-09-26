@@ -15,11 +15,12 @@ export default function Avaliacao({profissionais}: {profissionais: IProfissional
     return (
         <>
         <SecaoCard>
-            {profissionais?.map((profissional) => {
+            {profissionais && profissionais.length ? profissionais?.map((profissional) => {
                 return <Card profissional={profissional}></Card>
-            })}
+            }) : "Não há avaliações para mostrar"}
         </SecaoCard>
-        <Botao>Ver Mais</Botao>
+        {profissionais && profissionais.length > 4 ? 
+        <Botao>Ver Mais</Botao>  : "" }
         </>
     )
 }

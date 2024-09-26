@@ -7,7 +7,7 @@ const Botao = styled.button`
     color: var(--branco);
     border: none;
     margin-top: 1em;
-    font-wieght: 700;
+    font-weight: 700;
     line-height: 19px
 `
 
