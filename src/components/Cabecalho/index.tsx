@@ -2,6 +2,8 @@ import React from "react";
 import logo from './assets/logo.png';
 import perfil from './assets/perfil.png';
 import styled from "styled-components";
+import search from '../../pages/PaginaInicial/Pesquisa/assets/search.png'
+import autenticaStore from "../../stores/autentica.store";
 
 
 const CabecalhoEstilizado = styled.header`
@@ -21,15 +23,64 @@ const LinkEstilizado = styled.a`
     color: var(--azul--escuro);
     font-weight: 700
 `
-
-
+const LinkEstilizadoDeslogado = styled(LinkEstilizado)`
+    font-weight: 400;
+    text-decoration: none;
+    color: var(--azul-escuro)
+`
+const ContainerPesquisa = styled.div`
+    display: flex;
+    align-items: center;
+    background-color: #f2f2f2;
+    border-radius: 20px;
+    padding: 8px 16px
+`
+const InputCustomizado = styled.input`
+    flex: 1;
+    border: none;
+    background: none;
+    outline: none
+`
+const SpanCustomizado = styled.span`
+    background-image: url(${search});
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    background-position: 10px
+`
+const BotaoEstilizado = styled.a`
+    background-color: var(--azul-escuro);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: var(--branco);
+    text-decoration: none
+`
 export default function Cabecalho(){
+    const handleLogout = () => {
+        autenticaStore.logout();
+    };
+
     return(
         <CabecalhoEstilizado>
             <img src={logo} alt="logo da empresa voll"/>
             <Container>
-                <img src={perfil} alt="perfil do usuario" />
-                <LinkEstilizado href="#">Sair</LinkEstilizado>
+                {
+                autenticaStore.estaAutenticado 
+                ? 
+                <> 
+                    <img src={perfil} alt="perfil do usuario" />
+                    <LinkEstilizado href="#">Sair</LinkEstilizado>
+                </> :
+                <>
+                    <LinkEstilizadoDeslogado href="/Sobre">Sobre</LinkEstilizadoDeslogado>
+                    <LinkEstilizadoDeslogado href="/cadastro">Cadastra-se</LinkEstilizadoDeslogado>
+                    <ContainerPesquisa>
+                        <InputCustomizado type="text" placeholder="Digite sua busca" />
+                        <SpanCustomizado />
+                    </ContainerPesquisa>
+                    <BotaoEstilizado href="/login">Entrar</BotaoEstilizado>
+                </>
+                }
             </Container>
         </CabecalhoEstilizado>
     )

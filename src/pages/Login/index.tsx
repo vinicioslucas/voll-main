@@ -1,9 +1,11 @@
 import { useState } from "react";
 import CampoDigitacao from "../../components/CampoDigitacao";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Botao from "../../components/Botao";
 import logo from "../../components/Cabecalho/assets/logo.png";
+import usePost from "../../usePost";
+import autenticaStore from "../../stores/autentica.store";
 
 const Imagem = styled.img`
   padding: 2em 0;
@@ -43,15 +45,37 @@ const Formulario = styled.form`
 const BotaoCustomizado = styled(Botao)`
   width: 50%;
 `;
+ interface ILogin {
+      email: string,
+      senha: string,
+    }
 
 export default function Login(){
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const {cadastrarDados, erro, sucesso, resposta} = usePost();
+    const navigate = useNavigate();
+    const handleLogin = async(event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      const usuario: ILogin = {
+        email: email,
+        senha: senha,
+      }
+      try {
+        cadastrarDados({ url: "auth/login", dados: usuario})
+        autenticaStore.login({email: email, token: resposta})
+        resposta && navigate('/dashboard')
+      } catch (erro) {
+        erro && alert('Não foi possível fazer login')
+      }
+    }
+
+
     return (
         <>
             <Imagem src={logo} alt="Logo da Voll"/>
             <Titulo>Faça login em sua conta</Titulo>
-            <Formulario>
+            <Formulario onSubmit={handleLogin}>
                 <CampoDigitacao valor={email} tipo="text" placeholder="Insira seu endereço de email" onChange={setEmail} label="Email" />
                 <CampoDigitacao valor={senha} tipo="password" placeholder="Insira sua senha" onChange={setSenha} label="Senha"/>
                 <BotaoCustomizado type="submit">Entrar</BotaoCustomizado>

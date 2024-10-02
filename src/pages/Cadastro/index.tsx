@@ -86,8 +86,8 @@ export default function Cadastro () {
             try {
                 cadastrarDados({url: 'clinica', dados: clinica});
                 navigate('/login')
-            } catch (error) {
-                error && alert('erro ao cadastrar os dados')
+            } catch (erro) {
+                erro && alert('erro ao cadastrar os dados')
             }
         }
         setEtapaAtiva(etapaAtiva + 1); // Atualiza o estado da etapa para a proxima etapa
